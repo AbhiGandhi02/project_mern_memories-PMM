@@ -14,7 +14,11 @@ const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    if (post) setPostData(post);
+    if (post) {
+      // Convert tags array to comma-separated string for the form
+      const tagsString = Array.isArray(post.tags) ? post.tags.join(', ') : post.tags;
+      setPostData({ ...post, tags: tagsString });
+    }
   }, [post]);
 
   const clear = () => {
