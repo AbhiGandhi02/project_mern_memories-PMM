@@ -4,13 +4,11 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import CommentIcon from '@material-ui/icons/Comment';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
 import { likePost, deletePost } from '../../../actions/posts';
 import useStyles from './styles';
-import CommentSection from '../../CommentSection/CommentSection';
 
 const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch();
@@ -52,20 +50,12 @@ const Post = ({ post, setCurrentId }) => {
         <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
           <Likes />
         </Button>
-        <Button size="small" color="primary" onClick={() => setShowComments(!showComments)}>
-          <CommentIcon fontSize="small" />&nbsp; Comment
-        </Button>
         {user?.result?.firebaseUid === post?.creator && (
           <Button size="small" color="secondary" onClick={() => dispatch(deletePost(post._id))}>
             <DeleteIcon fontSize="small" /> Delete
           </Button>
         )}
       </CardActions>
-      <Collapse in={showComments} timeout="auto" unmountOnExit>
-        <CardContent>
-          <CommentSection post={post} />
-        </CardContent>
-      </Collapse>
     </Card>
   );
 };
